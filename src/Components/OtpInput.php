@@ -1,43 +1,47 @@
 <?php
+
 namespace HasanAhani\FilamentOtpInput\Components;
 
-use _PHPStan_11268e5ee\Nette\PhpGenerator\Closure;
-use Filament\Forms\Components\Actions\Action;
-use Filament\Forms\Components\Field;
-use Filament\Notifications\Notification;
-use Filament\Support\Concerns\HasExtraAlpineAttributes;
 use Filament\Forms\Components\Concerns;
-use Filament\Forms\Components\Contracts;
+use Filament\Forms\Components\Concerns\CanBeAutocapitalized;
+use Filament\Forms\Components\Concerns\CanBeAutocompleted;
+use Filament\Forms\Components\Concerns\CanBeReadOnly;
+use Filament\Forms\Components\Concerns\HasAffixes;
+use Filament\Forms\Components\Concerns\HasExtraInputAttributes;
+use Filament\Forms\Components\Contracts\CanBeLengthConstrained;
+use Filament\Forms\Components\Field;
+use Filament\Schemas\Components\Contracts\HasAffixActions;
+use Filament\Support\Concerns\HasExtraAlpineAttributes;
 
-class OtpInput extends Field implements Contracts\CanBeLengthConstrained, Contracts\HasAffixActions
+class OtpInput extends Field implements CanBeLengthConstrained, HasAffixActions
 {
-    use Concerns\CanBeAutocapitalized;
-    use Concerns\CanBeAutocompleted;
+    use CanBeAutocapitalized;
+    use CanBeAutocompleted;
+    use CanBeReadOnly;
     use Concerns\CanBeLengthConstrained;
-    use Concerns\CanBeReadOnly;
-    use Concerns\HasAffixes;
-    use Concerns\HasExtraInputAttributes;
+    use HasAffixes;
     use HasExtraAlpineAttributes;
+    use HasExtraInputAttributes;
 
     protected string $view = 'filament-otp-input::components.otp-input';
 
-    protected int | \Closure | null $numberInput = 4;
+    protected int|\Closure|null $numberInput = 4;
 
-    protected bool | \Closure | null $isRtl = false;
+    protected bool|\Closure|null $isRtl = false;
 
-    protected string | \Closure | null $type = 'number';
+    protected string|\Closure|null $type = 'number';
 
-    public function numberInput(int | \Closure $number = 4):static
+    public function numberInput(int|\Closure $number = 4): static
     {
         $this->numberInput = $number;
+
         return $this;
     }
 
-    public function getNumberInput():int
+    public function getNumberInput(): int
     {
         return $this->evaluate($this->numberInput);
     }
-
 
     public function password(): static
     {
